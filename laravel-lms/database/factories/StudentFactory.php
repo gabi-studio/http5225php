@@ -20,6 +20,7 @@ class StudentFactory extends Factory
             // factories are used to create fake data
             // this is great for testing
             // theres a github repo that shows you all the available faker methods
+            // DO THIS FOR THE ASSIGNMENT to get the highest park
             'fname' => fake()->firstName(),
             'lname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail()

@@ -17,7 +17,7 @@
 
     @endif
 
-    <form action="{{ route('students.update', $student -> id ) }}" method="PUT">
+    <form action="{{ route('students.update', $student -> id ) }}" method="POST">
         {{ csrf_field() }}
         <!-- this is a blade directive that will generate the CSRF token for you.
         it will generate a hidden input field with the token in it.
@@ -25,8 +25,11 @@
         if you don't put this token, laravel will not allow the form to be submitted. 
         by default, purely session based-->
 
-        <!-- use old to repopulate the form fields with the old values if the form fails validation. -->
+        <!-- the method of the form says post but we indicate the method as put to send the the backend
+         -- this is just a workaround because some browsers do not allow put method -->
 
+        <!-- use old to repopulate the form fields with the old values if the form fails validation. -->
+        @method('PUT')
         <label for="fname">First Name:</label>
         <input type="text" id="fname" name="fname" placeholder="First Name" value="{{ old('fname') ?? $student -> fname }}" >
         
@@ -36,6 +39,6 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') ?? $student -> email }}" >
         
-        <button type="submit">Create Student</button>
+        <button type="submit">Edit Student</button>
     </form>
 @endsection

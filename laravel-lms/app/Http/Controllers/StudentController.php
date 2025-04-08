@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\Course;
+
 
 class StudentController extends Controller
 {
@@ -36,7 +38,11 @@ class StudentController extends Controller
         // the form will have a post request to the students.store route
         // on the routes list, you can see the names of the routes
         // php artisan route:list
-        return view('students.create');
+        return view('students.create')->with('courses', Course::all());   
+        
+        // ^ this means that when you create a new student, 
+        // you will also be able to select a course when creating a new student
+        // this is a one to many relationship
     }
 
     /**
@@ -68,6 +74,7 @@ class StudentController extends Controller
         // in classic php, fetch association from the database
         // in laravel, you can just use compact
         // compact converts the student variable to fetch the student from the database
+        // compact allows you to return a single student array 
         // and pass it to the view
 
         return view('students.edit', compact('student'));
@@ -78,7 +85,10 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        //
+        // we are calling the update method on the upcoming request
+        // this means we are updating the student with the request data
+        $student->update($request->validated());
+        return redirect()->route('students.index');
     }
 
     /**
@@ -87,5 +97,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+        Student::destroy($student -> id);
+        return redirect()->route('students.index');
     }
 }

@@ -11,6 +11,12 @@ Route::get('/', function () {
 // the students route will be handled by the StudentController
 // this one line will create all the routes for the resource "student"
 // it will prefix the routes with "students"
+// do not hardcode the routes, use the resource method to create the routes 
+// for example: students.index, students.create, students.store, etc.
+
+// Route class
+// resource is a method that creates all the routes for the resource
+
 Route::resource('students', StudentController::class);
 
 // on your cli: php artisan route:list
